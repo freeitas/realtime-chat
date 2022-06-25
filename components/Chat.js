@@ -9,16 +9,26 @@ const Chat = ({ supabase }) => {
         .from('message')
         .select('*')
 
-        setMessages(messages)
+      setMessages(messages)
     }
 
     getMessages()
 
+    const setupMessagesSubscription = async () => {
+      await supabase
+        .from('message')
+        .on('INSERT', payload => {
+          setMessages(previous => [].concat(previous, payload.new))
+        })
+        .subscribe()
+    }
+
+    setupMessagesSubscription()
   }, [])
-  
+
   return (
     <div>
-      {messages.map(message => <div key="message.id">{message.content}</div>)}
+      {messages.map(message => <div key={message.id}>{message.content}</div>)}
     </div>
   )
 }
