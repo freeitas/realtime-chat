@@ -7,7 +7,7 @@ const supabase = createClient(
 )
 
 const useSupabase = () => {
-  const [session, setSession] = useState(supabase.auth.session)
+  const [session, setSession] = useState(supabase.auth.session())
 
   supabase.auth.onAuthStateChange(async (_event, session) => {
     setSession(session)
