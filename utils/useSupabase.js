@@ -21,7 +21,7 @@ const useSupabase = () => {
           .from('user')
           .select('*')
           .eq('id', session.user.id)
-        
+
         if(currentUser.length) {
           const foundUser = currentUser[0]
           await supabase
