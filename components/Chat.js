@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react"
 
-const Chat = ({ session, supabase }) => {
+const Chat = ({ currentUser, session, supabase }) => {
   const [messages, setMessages] = useState([])
   const message = useRef("")
 
@@ -24,7 +24,6 @@ const Chat = ({ session, supabase }) => {
         .subscribe()
     }
 
-    setupMessagesSubscription()
   }, [])
 
   const sendMessage = async evt => {
@@ -42,6 +41,7 @@ const Chat = ({ session, supabase }) => {
 
   return (
     <div>
+      <p>Welcome, {currentUser.username ? currentUser.username : session.user.email}</p>
       {messages.map(message => <div key={message.id}>{message.content}</div>)}
       <form onSubmit={sendMessage}>
         <input placeholder="Write your message" required ref={message}></input>
